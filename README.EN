@@ -1,0 +1,32 @@
+FNLSERIES :: Extract wind time series and Tecplot files (optional) from FNL/GFS files
+-----------------------------------------------------------------------------------------------------
+The program extracts the horizontal wind velocities, U and V, at a constant pressure level of 
+1000 mbar at the FNL/GFS point closest to the coordinates supplied by the user 
+
+
+NB1: 'wgrib' must be previously installed and available as a shell command
+    'link_grib.csh' must also be available as a C-shell script
+    Both utilities are included in the distribution in directory 'external.code'
+
+Instructions:
+
+1. Compile using 'make' in directory 'fnlseries.src'
+
+2. Create a working directory and link all fnl* files to be processed using the supplied script
+   'link_grib.csh'. Example:
+
+   >> link_grib.csh <DATA_DIR>/fnl* 
+
+3. Edit 'fnlseries.cfg' and introduce the coordinates of all points to be processed (there is an OS 
+   limit to the maximum number of points which will be the maximum number of files that may be 
+   open simultaneously). Change OS limit or process by chunks.
+
+4. Run 'fnlseries'
+
+   >> fnlseries
+
+5. Output files with extension .dat will be produced with time series data of the format:
+   1-4 lines   : Header lines
+   5-EOF lines : Wind data in 7 columns: ID (=999), direction, wind speed, 3 error values of 
+   99.99 and the timestamp
+
